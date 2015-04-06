@@ -7,8 +7,8 @@
  * Time: 8:50
  */
 
-    $mail = $_POST['mail'];
-    $psd = $_POST['psd'];
+    $mail = $_REQUEST['mail'];
+    $psd = $_REQUEST['psd'];
 
     # connect to the sql
     $datafile = "commission.sqlite";
