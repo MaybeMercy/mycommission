@@ -18,33 +18,45 @@
     <![endif]-->
 </head>
 <body>
+
 <div class="container-fluid">
     <div class="col-md-10 col-md-offset-1">
         <ul class="nav nav-tabs">
             <li role="presentation"><a href="index.php">Home</a></li>
-            <li role="presentation" class="active"><a href="#">Admin</a></li>
-            <li role="presentation"><a href="index.php">Salesman</a></li>
+            <li role="presentation"><a href="#">Admin</a></li>
+            <li role="presentation" class="active"><a href="index.php">Salesman</a></li>
+            <li class="navbar-right" role="presentation"><a href="index.php">Sign Out</a></li>
         </ul>
-        <br>
-        <br>
     </div>
-
-    <div class="col-md-4 col-md-offset-4 ">
-        <form class="form-signin" action="log_in.php" method="post">
-            <label for="inputEmail" class="sr-only">Email address</label>
-            <input name="mail" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <br>
-            <label for="inputPassword" class="sr-only">Password</label>
-            <input name="psd" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            <br>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
-            <br>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        </form>
+    <!-- just for tables-->
+    <div class="col-md-6 col-md-offset-3">
+        <table class="table table-bordered">
+            <tr>
+                <td>locks</td>
+                <td>stocks</td>
+                <td>barrels</td>
+                <td>date</td>
+            </tr>
+            <?php
+            $id = $_POST['id'];
+            $datafile = "commission.sqlite";
+            $query = "select * from salesman where id=".$id;
+            $db = new SQLite3($datafile);
+            $result = $db->query($query);
+            if(!$result)
+                echo "";
+            else
+                while($row = $result->fetchArray()){
+                    $out = "<tr>";
+                    $out .= "<td>".$row['locks']."</td>"
+                        ."<td>".$row['stocks']."</td>"
+                        ."<td>".$row['barrels']."</td>"
+                        ."<td>".$row['date']."</td>";
+                    $out .= "</tr>";
+                    echo $out;
+                }
+            ?>
+        </table>
     </div>
 </div> <!-- /container -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

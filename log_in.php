@@ -16,9 +16,15 @@
     $db = new SQLite3($datafile);
     $result = $db->query($query);
     if(!$result)
-        return "nothing";
+        header("index.php");#redirect
     else
         while($row = $result->fetchArray()){
-            return $row['id'];
+            //
+            $position = $row['position'];
+            if($position==0)
+                header("admin_index.php?id=".$row['id']);
+            else
+                header("salesman_index.php?id=".$row['id']);
+            exit;
         }
 ?>

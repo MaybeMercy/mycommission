@@ -28,7 +28,9 @@
             <li class="navbar-right" role="presentation"><a href="index.php">Sign Out</a></li>
         </ul>
     </div>
-    <div class="col-md-8 col-md-offset-2">
+    <!-- just for tables-->
+    <div class="col-md-6 col-md-offset-3">
+        <br>
         <div class="dropdown">
             <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                 Dropdown
@@ -41,9 +43,7 @@
                 <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
             </ul>
         </div>
-    </div>
-    <!-- just for tables-->
-    <div class="col-md-6 col-md-offset-3">
+        <br>
         <table class="table table-bordered">
             <tr>
                 <td>nick</td>
