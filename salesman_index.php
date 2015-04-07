@@ -23,7 +23,7 @@
     <div class="col-md-10 col-md-offset-1">
         <ul class="nav nav-tabs">
             <li role="presentation"><a href="index.php">Home</a></li>
-            <li role="presentation"><a href="#">Admin</a></li>
+            <li role="presentation"><a href="index.php">Admin</a></li>
             <li role="presentation" class="active"><a href="index.php">Salesman</a></li>
             <li class="navbar-right" role="presentation"><a href="index.php">Sign Out</a></li>
         </ul>
@@ -31,6 +31,8 @@
     <!-- just for tables -->
     <div class="col-md-6 col-md-offset-3">
         <br>
+        <div class="lead">Welcome, <?php if(isset($_COOKIE['current_user']))
+            {echo $_COOKIE['current_user'];}?></div>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -94,25 +96,28 @@
                         $barrels_saled += $row['barrels'];
                         $stocks_saled += $row['stocks'];
                     }
+                    # if all left is zero
+                    if($locks_saled==70&&$stocks_saled==80&&$barrels_saled==90)
+                        $disable=true;
                 }
                 # done
                 ?>
             </tbody>
         </table>
     </div>
+    <div class="col-md-4 col-md-offset-4 lead">Commission is <?php include_once("caculate_money.php");
+        echo update_commission($id, 0);?>$ this month so far</div>
     <!-- just for the form -->
     <div class="col-md-2 col-md-offset-5">
-        <form class="form-signin" action="salesman_commit.php" method="post">
-            <label for="nlocks" class="sr-only">Locks</label>
-            <input name="nlocks" id="locks" class="form-control" type="number" min="1" max=<?php echo 70-$locks_saled;?> required autofocus>
+        <form class="form-horizontal" onsubmit="return check()" action="salesman_commit.php" method="post">
+            <label class="control-label">Locks</label>
+            <input name="locks" id="locks" class="form-control" type="number" min="0" max=<?php echo 70-$locks_saled;?> required autofocus>
+            <label class="control-label">Stocks</label>
+            <input name="stocks" id="stocks" class="form-control" type="number" min="0" max=<?php echo 80-$stocks_saled;?> required>
+            <label class="control-label">Barrels</label>
+            <input name="barrels" id="barrels" class="form-control" type="number" min="0" max=<?php echo 90-$barrels_saled;?> required>
+            <input type="hidden" name="id" value="<?php echo $id ?>">
             <br>
-            <label for="nstocks" class="sr-only">Stocks</label>
-            <input name="nstocks" id="stocks" class="form-control" type="number" min="1" max=<?php echo 80-$stocks_saled;?> required>
-            <br>
-            <label for="nbarrels" class="sr-only">Barrels</label>
-            <input name="nbarrels" id="barrels" class="form-control" type="number" min="1" max=<?php echo 90-$barrels_saled;?> required>
-            <br>
-            <input type="hidden" name="nid" value="<?php echo $id ?>">
             <button class="btn btn-lg btn-primary btn-block" <?php if($disable){ echo 'disabled=disabled';}
                 ?> type="submit">Commit</button>
             <br>
@@ -125,7 +130,6 @@
         function $(id){return document.getElementById(id)};
         $("end_submit").onclick = function(){
             // get the cookie
-
             location.href="salesman_commit.php?nid="+getId()+"&nlocks=-1&nstocks=-1&nbarrels=-1";
         }
         function getId(){
@@ -135,10 +139,20 @@
                 var item = cookies[i].split("=");
                 // get the key
                 if("id"==item[0]){
-                    alert(item[1]);
                     return item[1];
                 }
             }
+        }
+        function check(){
+            var locks = document.getElementById("locks").value;
+            var stocks = document.getElementById("stocks").value;
+            var barrels = document.getElementById("barrels").value;
+            if(locks==0&&stocks==0&&barrels==0){
+                alert("can not be all 0");
+                return false;
+            }
+            else
+                return true;
         }
     </script>
 

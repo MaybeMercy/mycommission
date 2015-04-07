@@ -5,14 +5,14 @@
  * Date: 2015/4/7
  * Time: 9:45
  */
-$id = $_REQUEST['nid'];
-$locks = $_REQUEST['nlocks'];
-$stocks = $_REQUEST['nstocks'];
-$barrels = $_REQUEST['nbarrels'];
+include_once("caculate_money.php");
+$id = $_REQUEST['id'];
+$locks = $_REQUEST['locks'];
+$stocks = $_REQUEST['stocks'];
+$barrels = $_REQUEST['barrels'];
 $date = date("Y-m-d");
 
-$dbfile = "commission.sqlite";
-$db = new SQLite3($dbfile);
+$db = new SQLite3("commission.sqlite");
 $insert = "insert into sales values ('".$id."', $locks, $stocks, $barrels, '".$date."')";
 
 $result = $db->exec($insert);
@@ -20,7 +20,9 @@ $result = $db->exec($insert);
 if(!$result){
     echo "<script>alert(\"wrong\")</script>";
 }else{
-    echo "<script>alert(\"success\")</script>";
+    $result = update_commission($id, $locks*45+$stocks*30+$barrels*25);
+    echo "<script>alert(\"success \"$result)</script>";
+    # update the commission
 }
 echo "<script>location.href=\"salesman_index.php?id=".$id."\";</script>";
 

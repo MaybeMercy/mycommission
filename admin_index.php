@@ -30,8 +30,8 @@
     </div>
     <!-- just for tables-->
     <div class="col-md-6 col-md-offset-3">
-        <br>
-        <div class="col-md-4" action="admin_index.php">
+        <div class="lead">Welcome <?php if(isset($_COOKIE['current_user'])){echo $_COOKIE['current_user'];}?></div>
+        <div class="col-md-4">
             <select id="select_salesman" class="form-control">
                 <?php
                     $datafile = "commission.sqlite";
@@ -82,7 +82,6 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <td>nick</td>
                     <td>locks</td>
                     <td>stocks</td>
                     <td>barrels</td>
@@ -109,8 +108,7 @@
                     if($row['locks']==-1&&$row['stocks']==-1&&$row['barrels']==-1)
                         continue;
                     $out = "<tr>";
-                    $out .= "<td>".'nick'."</td>"
-                        ."<td>".$row['locks']."</td>"
+                    $out .= "<td>".$row['locks']."</td>"
                         ."<td>".$row['stocks']."</td>"
                         ."<td>".$row['barrels']."</td>"
                         ."<td>".$row['date']."</td>";
