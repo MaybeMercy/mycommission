@@ -16,15 +16,19 @@
     $db = new SQLite3($datafile);
     $result = $db->query($query);
     if(!$result)
-        header("index.php");#redirect
-    else
+        echo "<script>location.href=\"index.php\"</script>";
+    else{
         while($row = $result->fetchArray()){
             //
             $position = $row['position'];
             if($position==0)
-                header("admin_index.php?id=".$row['id']);
+                echo "<script>location.href=\"admin_index.php?id=".$row['id']."\"</script>";
             else
-                header("salesman_index.php?id=".$row['id']);
+                echo "<script>location.href=\"salesman_index.php?id=".$row['id']."\"</script>";
             exit;
         }
+        echo "<script>location.href=\"index.php\"</script>";
+
+    }
+
 ?>
