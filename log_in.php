@@ -25,6 +25,7 @@
                 echo "<script>location.href=\"admin_index.php?id=".$row['id']."\"</script>";
             else
                 echo "<script>location.href=\"salesman_index.php?id=".$row['id']."\"</script>";
+            setcookie("current_user", $mail);
             exit;
         }
         echo "<script>location.href=\"index.php\"</script>";
