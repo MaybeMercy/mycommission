@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>Commission</title>
+    <title>Admin</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -31,37 +31,83 @@
     <!-- just for tables-->
     <div class="col-md-6 col-md-offset-3">
         <br>
-        <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                Dropdown
-                <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-            </ul>
+        <div class="col-md-4" action="admin_index.php">
+            <select id="select_salesman" class="form-control">
+                <?php
+                    $datafile = "commission.sqlite";
+                    $db = new SQLite3($datafile);
+                    $query = "select * from user where position=1";
+                    $result = $db->query($query);
+                    $salesmanId = "";
+                    # is request
+                    if(isset($_REQUEST['salesmanId'])){
+                        $salesmanId = $_REQUEST['salesmanId'];
+                    }
+                    if(!$result){
+                        # error
+                    }else{
+                        while($row = $result->fetchArray()){
+                            # if salesmanId is ""
+                            if($salesmanId==""){
+                                $salesmanId = $row['id'];
+                            }
+                            if($salesmanId==$row['id'])
+                                $out .= "<option selected=selected value=".$row['id'].">".$row['mail']."</option>";
+                            else
+                                $out .= "<option value=".$row['id'].">".$row['mail']."</option>";
+                        }
+                    }
+                    echo $out;
+                ?>
+            </select>
+            <br>
+            <button id="confirm_salesman" class="btn btn-default">Select</button>
+            <br><br>
+            <script type="text/javascript" language="javascript">
+
+                $("confirm_salesman").onclick = function(){
+                    // get the select
+                    var id = document.getElementById("select_salesman").value;
+                    alert(id);
+                    // jump
+                    location.href="admin_index.php?salesmanId="+id;
+                }
+                function $(id){
+                    return document.getElementById(id)
+                };
+
+            </script>
         </div>
         <br>
         <table class="table table-bordered">
-            <tr>
-                <td>nick</td>
-                <td>locks</td>
-                <td>stocks</td>
-                <td>barrels</td>
-                <td>date</td>
-            </tr>
+            <thead>
+                <tr>
+                    <td>nick</td>
+                    <td>locks</td>
+                    <td>stocks</td>
+                    <td>barrels</td>
+                    <td>date</td>
+                </tr>
+            </thead>
+            <tbody>
             <?php
-            $id = 2;
-            $datafile = "commission.sqlite";
-            $query = "select * from salesman where id=".$id;
-            $db = new SQLite3($datafile);
+            if(isset($_COOKIE['salesmanId'])){
+                $id = $_COOKIE['salesmanId'];
+            }else{
+
+            }
+            $id = $salesmanId;
+            if($id=="") # if $id is ""
+                return;
+            $query = "select * from sales where id=".$id;
             $result = $db->query($query);
             if(!$result)
                 echo "";
             else
                 while($row = $result->fetchArray()){
+                    // jump the end record
+                    if($row['locks']==-1&&$row['stocks']==-1&&$row['barrels']==-1)
+                        continue;
                     $out = "<tr>";
                     $out .= "<td>".'nick'."</td>"
                         ."<td>".$row['locks']."</td>"
@@ -72,6 +118,7 @@
                     echo $out;
                 }
             ?>
+            </tbody>
         </table>
     </div>
 </div> <!-- /container -->
