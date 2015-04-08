@@ -54,6 +54,7 @@ function update_commission($id, $money){
         return "update error";
     else
         return $com;
+    $db->close();
 }
 
 # get the sales of the type
@@ -73,7 +74,8 @@ function get_sale($id, $type){
             return "error";
         }else{
             while($row = $result->fetchArray()){
-                $num += $row[$type];
+                if($row[$type]!=-1) # if -1 skip
+                    $num += $row[$type];
             }
         }
         if($i<12)
@@ -81,6 +83,7 @@ function get_sale($id, $type){
         else
             $out .= $num;
     }
+    $db->close();
     return $out;
 }
 ?>

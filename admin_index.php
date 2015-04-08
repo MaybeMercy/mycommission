@@ -112,6 +112,7 @@
                     $out .= "</tr>";
                     echo $out;
                 }
+            $db->close();
             ?>
             </tbody>
         </table>

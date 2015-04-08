@@ -20,7 +20,10 @@ $result = $db->exec($insert);
 if(!$result){
     echo "<script>alert(\"wrong\")</script>";
 }else{
-    $result = update_commission($id, $locks*45+$stocks*30+$barrels*25);
+    # if -1 skip
+    if($locks==-1&&$stocks==-1&&$barrels==-1);
+    else
+        $result = update_commission($id, $locks*45+$stocks*30+$barrels*25);
     echo "<script>alert(\"success \"$result)</script>";
     # update the commission
 }

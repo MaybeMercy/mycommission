@@ -50,7 +50,7 @@
                 $datafile = "commission.sqlite";
                 $date = date("Y")."-".date("m");
                 # get all the table
-                $query = "select * from sales where id=".$id;
+                $query = "select * from sales where id='".$id."'";
                 $db = new SQLite3($datafile);
                 $result = $db->query($query);
                 # echo $result->numColumns();
@@ -100,6 +100,7 @@
                     if($locks_saled==70&&$stocks_saled==80&&$barrels_saled==90)
                         $disable=true;
                 }
+                $db->close();
                 # done
                 ?>
             </tbody>
@@ -187,9 +188,8 @@
         function $(id){return document.getElementById(id)};
         $("end_submit").onclick = function(){
             // get the cookie
-            var id = <?php echo $id;?>;
-            return;
-            location.href="salesman_commit.php?nid="+id+"&nlocks=-1&nstocks=-1&nbarrels=-1";
+            var gid = <?php echo $id;?>;
+            location.href="salesman_commit.php?id="+gid+"&locks=-1&stocks=-1&barrels=-1";
         }
         // not use it anymore
         function getId(){
