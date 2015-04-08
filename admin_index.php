@@ -122,7 +122,7 @@
     <div id="chart" style="height: 400px"></div>
     <script src="js/echarts-all.js"></script>
     <script type="text/javascript">
-        var myChart = echarts.init(document.getElementById('chart'));
+        var myChart = echarts.init(document.getElementById('chart'),'green');
         myChart.setOption({
             tooltip : {
                 trigger: 'axis'
@@ -170,7 +170,7 @@
                     data:[<?php echo get_sale($id, 'barrels')?>]
                 }
             ]
-        });
+        }, 'green');
 
     </script>
 </div> <!-- /container -->
