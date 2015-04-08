@@ -5,6 +5,7 @@
  * Date: 2015/4/7
  * Time: 19:52
  */
+# caculate the money
 function caculate_money($money){
 
     if($money<=1000)
@@ -17,6 +18,7 @@ function caculate_money($money){
 
 }
 
+# update the commission db
 function update_commission($id, $money){
     $db = new SQLite3("commission.sqlite");
     $date = date('Y')."-".date('m');
@@ -52,5 +54,33 @@ function update_commission($id, $money){
         return "update error";
     else
         return $com;
+}
+
+# get the sales of the type
+function get_sale($id, $type){
+    $db = new SQLite3("commission.sqlite");
+    $out = "";
+    for($i=1;$i<=12;$i++){
+        $num = 0;
+        if($i<10)
+            $date = date('Y')."-0".$i;
+        else
+            $date = date('Y')."-".$i;
+        $select = "select * from sales where id='".$id."' and date like '".$date."%'";
+        $result = $db->query($select);
+        if(!$result){
+            # error
+            return "error";
+        }else{
+            while($row = $result->fetchArray()){
+                $num += $row[$type];
+            }
+        }
+        if($i<12)
+            $out .= $num.",";
+        else
+            $out .= $num;
+    }
+    return $out;
 }
 ?>

@@ -22,7 +22,7 @@
     <div class="col-md-10 col-md-offset-1">
         <ul class="nav nav-tabs">
             <li role="presentation" class="active"><a href="index.php">Home</a></li>
-            <li role="presentation" ><a href="#">Admin</a></li>
+            <li role="presentation" ><a href="index.php">Admin</a></li>
             <li role="presentation"><a href="index.php">Salesman</a></li>
         </ul>
         <br>
