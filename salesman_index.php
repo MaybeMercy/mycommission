@@ -48,6 +48,7 @@
                 setcookie("id",$id);# set the cookie
                 # $id = 1 ;
                 $datafile = "commission.sqlite";
+                $date = date("Y")."-".date("m");
                 # get all the table
                 $query = "select * from sales where id=".$id;
                 $db = new SQLite3($datafile);
@@ -74,7 +75,6 @@
 
                 # get the min and the max
 
-                $date = date("Y")."-".date("m");
                 # var_dump($date);
                 $query = "select * from sales where id='".$id."' and date like '".$date."%'";
                 $result = $db->query($query);
@@ -124,14 +124,74 @@
             <button id="end_submit" class="btn btn-lg btn-warning btn-block" <?php if($disable){ echo 'disabled=disabled';}
             ?> type="button">Submit -1</button>
         </form>
+        <br>
     </div>
+    <!-- for the chart -->
+    <div id="chart"  style="height:400px">
+    </div>
+    <script src="js/echarts-all.js"></script>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('chart'));
+        myChart.setOption({
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['locks','stocks','barrels']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    splitArea : {show : true}
+                }
+            ],
+            series : [
+                {
+                    name:'locks',
+                    type:'bar',
+                    data:[<?php echo get_sale($id, 'locks');?>]
+                },
+                {
+                    name:'stocks',
+                    type:'bar',
+                    data:[<?php echo get_sale($id, 'stocks');?>]
+                },
+                {
+                    name:'barrels',
+                    type:'bar',
+                    data:[<?php echo get_sale($id, 'barrels')?>]
+                }
+            ]
+        });
+
+    </script>
     <!-- listen the end submit button -->
     <script type="text/javascript" language="javascript">
         function $(id){return document.getElementById(id)};
         $("end_submit").onclick = function(){
             // get the cookie
-            location.href="salesman_commit.php?nid="+getId()+"&nlocks=-1&nstocks=-1&nbarrels=-1";
+            var id = <?php echo $id;?>;
+            return;
+            location.href="salesman_commit.php?nid="+id+"&nlocks=-1&nstocks=-1&nbarrels=-1";
         }
+        // not use it anymore
         function getId(){
             var coo = document.cookie;
             var cookies =coo.split(";");

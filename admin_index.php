@@ -30,8 +30,9 @@
     </div>
     <!-- just for tables-->
     <div class="col-md-6 col-md-offset-3">
+        <br>
         <div class="lead">Welcome <?php if(isset($_COOKIE['current_user'])){echo $_COOKIE['current_user'];}?></div>
-        <div class="col-md-4">
+        <div>
             <select id="select_salesman" class="form-control">
                 <?php
                     $datafile = "commission.sqlite";
@@ -79,6 +80,7 @@
             </script>
         </div>
         <br>
+        <!-- for the table -->
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -90,11 +92,6 @@
             </thead>
             <tbody>
             <?php
-            if(isset($_COOKIE['salesmanId'])){
-                $id = $_COOKIE['salesmanId'];
-            }else{
-
-            }
             $id = $salesmanId;
             if($id=="") # if $id is ""
                 return;
@@ -119,6 +116,63 @@
             </tbody>
         </table>
     </div>
+    <!-- remind -->
+    <div class="col-md-4 col-md-offset-4 lead">U should pay him <?php include_once("caculate_money.php");
+            echo update_commission($id, 0);?>$ this month so far</div>
+    <div id="chart" style="height: 400px"></div>
+    <script src="js/echarts-all.js"></script>
+    <script type="text/javascript">
+        var myChart = echarts.init(document.getElementById('chart'));
+        myChart.setOption({
+            tooltip : {
+                trigger: 'axis'
+            },
+            legend: {
+                data:['locks','stocks','barrels']
+            },
+            toolbox: {
+                show : true,
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    magicType : {show: true, type: ['line', 'bar']},
+                    restore : {show: true},
+                    saveAsImage : {show: true}
+                }
+            },
+            calculable : true,
+            xAxis : [
+                {
+                    type : 'category',
+                    data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value',
+                    splitArea : {show : true}
+                }
+            ],
+            series : [
+                {
+                    name:'locks',
+                    type:'bar',
+                    data:[<?php echo get_sale($id, 'locks');?>]
+                },
+                {
+                    name:'stocks',
+                    type:'bar',
+                    data:[<?php echo get_sale($id, 'stocks');?>]
+                },
+                {
+                    name:'barrels',
+                    type:'bar',
+                    data:[<?php echo get_sale($id, 'barrels')?>]
+                }
+            ]
+        });
+
+    </script>
 </div> <!-- /container -->
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
