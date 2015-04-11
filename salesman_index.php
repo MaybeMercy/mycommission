@@ -107,7 +107,10 @@
         </table>
     </div>
     <div class="col-md-4 col-md-offset-4 lead">Commission is <?php include_once("caculate_money.php");
-        echo update_commission($id, 0);?>$ this month so far</div>
+        if($locks_saled==0||$stocks_saled==0||$barrels_saled==0)
+            echo 0;
+        else
+            echo update_commission($id, 0);?>$ this month so far</div>
     <!-- just for the form -->
     <div class="col-md-2 col-md-offset-5">
         <form class="form-horizontal" onsubmit="return check()" action="salesman_commit.php" method="post">
