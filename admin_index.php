@@ -97,6 +97,9 @@
                 return;
             $query = "select * from sales where id=".$id;
             $result = $db->query($query);
+            $saled_locks = 0;
+            $saled_stocks = 0;
+            $saled_barrels = 0;
             if(!$result)
                 echo "";
             else
@@ -104,6 +107,11 @@
                     // jump the end record
                     if($row['locks']==-1&&$row['stocks']==-1&&$row['barrels']==-1)
                         continue;
+                    # saled
+                    $saled_locks += $row['locks'];
+                    $saled_stocks += $row['stocks'];
+                    $saled_barrels += $row['barrels'];
+                    # end
                     $out = "<tr>";
                     $out .= "<td>".$row['locks']."</td>"
                         ."<td>".$row['stocks']."</td>"
@@ -119,7 +127,10 @@
     </div>
     <!-- remind -->
     <div class="col-md-4 col-md-offset-4 lead">U should pay him <?php include_once("caculate_money.php");
-            echo update_commission($id, 0);?>$ this month so far</div>
+            if($saled_locks==0||$saled_barrels==0||$saled_stocks==0)
+                echo 0;
+            else
+                echo update_commission($id, 0);?>$ this month so far</div>
     <div id="chart" style="height: 400px"></div>
     <script src="js/echarts-all.js"></script>
     <script type="text/javascript">
