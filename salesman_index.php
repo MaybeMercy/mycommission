@@ -18,16 +18,16 @@
     <![endif]-->
 </head>
 <body>
-
+<div class="col-md-10 col-md-offset-1">
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="index.php">Home</a></li>
+        <li role="presentation"><a href="index.php">Admin</a></li>
+        <li role="presentation" class="active"><a href="index.php">Salesman</a></li>
+        <li class="navbar-right" role="presentation"><a href="index.php">Sign Out</a></li>
+    </ul>
+</div>
 <div class="container-fluid">
-    <div class="col-md-10 col-md-offset-1">
-        <ul class="nav nav-tabs">
-            <li role="presentation"><a href="index.php">Home</a></li>
-            <li role="presentation"><a href="index.php">Admin</a></li>
-            <li role="presentation" class="active"><a href="index.php">Salesman</a></li>
-            <li class="navbar-right" role="presentation"><a href="index.php">Sign Out</a></li>
-        </ul>
-    </div>
+
     <!-- just for tables -->
     <div class="col-md-6 col-md-offset-3">
         <br>

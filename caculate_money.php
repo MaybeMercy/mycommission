@@ -31,7 +31,7 @@ function update_commission($id, $money){
     }else{
         # nothing in db, so insert into init
         $row = $result->fetchArray();
-        if(!$row['money']&&$row['money']!=0)
+        if(!$row['money'])
         {
             $origin_money = 0;
             $insert = "insert into commission values('".$id."', '".$date."', 0, 0)";

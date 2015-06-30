@@ -9,7 +9,6 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -18,16 +17,16 @@
     <![endif]-->
 </head>
 <body>
+<div class="col-md-10 col-md-offset-1">
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="index.php">Home</a></li>
+        <li role="presentation" ><a href="index.php">Admin</a></li>
+        <li role="presentation"><a href="index.php">Salesman</a></li>
+    </ul>
+    <br>
+    <br>
+</div>
 <div class="container-fluid">
-    <div class="col-md-10 col-md-offset-1">
-        <ul class="nav nav-tabs">
-            <li role="presentation" class="active"><a href="index.php">Home</a></li>
-            <li role="presentation" ><a href="index.php">Admin</a></li>
-            <li role="presentation"><a href="index.php">Salesman</a></li>
-        </ul>
-        <br>
-        <br>
-    </div>
 
     <div class="col-md-4 col-md-offset-4 ">
         <form class="form-signin" action="log_in.php" method="post">
