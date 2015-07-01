@@ -24,14 +24,13 @@ function update_commission($id, $money){
     $date = date('Y')."-".date('m');
     $query = "select * from commission where id='".$id."' and date='".$date."'";
     $result = $db->query($query);
-    $origin_money = 0;
     if(!$result){
         # null and nothing
         return "select error";
     }else{
         # nothing in db, so insert into init
         $row = $result->fetchArray();
-        if(!$row['money'])
+        if(!$row)
         {
             $origin_money = 0;
             $insert = "insert into commission values('".$id."', '".$date."', 0, 0)";
@@ -40,7 +39,7 @@ function update_commission($id, $money){
             if(!$result)
                 return;
         }else{
-            $origin_money = $row['money'];
+            $origin_money = 0;
         }
 
     }
