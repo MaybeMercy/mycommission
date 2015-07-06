@@ -39,7 +39,7 @@ function update_commission($id, $money){
             if(!$result)
                 return;
         }else{
-            $origin_money = 0;
+            $origin_money = $row['money'];
         }
 
     }
